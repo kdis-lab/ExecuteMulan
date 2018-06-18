@@ -1,6 +1,6 @@
 # Executing Multi-Label Learning methods from Mulan.
 
-[Mulan](http://mulan.sourceforge.net/) is an open-source Java library for learning from multi-label datasets; including both Multi-Label Classification (MLC) and Multi-Target Regression (MTR) methods. The Mulan library only provides a Java API, but no any GUI or command-line interface to execute its methods.
+[Mulan](http://mulan.sourceforge.net/) is an open-source Java library for learning from multi-label datasets; including both Multi-Label Classification (MLC) and Multi-Target Regression (MTR) methods [[Tso11]](#Tso11). The Mulan library only provides a Java API, but no any GUI or command-line interface to execute its methods.
 
 In this repository, we created an executable .jar file to execute MLC and MTR methods from the Mulan library. The aim of this project was to have a personal way to execute experiments with the different methods as simple as possible.
 
@@ -22,35 +22,28 @@ The full list of methods availables in this jar is provided below. It is shown t
 * Multi-label classification methods:
   * ```AdaBoostMH```: AdaBoost.MH
   * ```BPMLL```: Back-Propagation for MLL
-  * ```BR```: 
-  * ```CC```: 
-  * ```CDE```: 
-  * ```CLR```: 
-  * ```EBR```: 
-  * ```ECC```: 
-  * ```EPS```: 
-  * ```HOMER```: 
-  * ```IBLR```: 
-  * ```LP```: 
-  * ```LPBR```: 
-  * ```MLkNN```: 
-  * ```MLS```: 
-  * ```PS```: 
-  * ```RAkEL```: 
-  * ```RFPCT```: 
+  * ```BR```: Binary Relevance
+  * ```CC```: Classifier Chains
+  * ```CDE```: Chi-Dep Ensemble
+  * ```CLR```: Calibrated Label Ranking
+  * ```EBR```: Ensemble of BRs
+  * ```ECC```: Ensemble of Classifier Chains
+  * ```EPS```: Ensemble of Pruned Sets
+  * ```HOMER```: HOMER
+  * ```IBLR```: Instance-Based Logistic Regression
+  * ```LP```: Label Powerset
+  * ```LPBR```: LP-BR (a.k.a. Chi-Dep)
+  * ```MLkNN```: Multi-Label k-Nearest Neighbors
+  * ```MLS```: Multi-Label Stacking
+  * ```PS```: Pruned Sets
+  * ```RAkEL```: RAkEL
+  * ```RFPCT```: Random Forest of Predictive Clustering Trees
 * Multi-target regression methods:
-  * ```ERC```: 
-  * ```RC```: 
-  * ```RLC```: 
-  * ```ST```: 
-  * ```SST```: 
-
-
+  * ```ERC```: Ensemble of Regressor Chains
+  * ```RC```: Regressor Chain
+  * ```RLC```: Random Linear Combinations
+  * ```ST```: Single-Target
+  * ```SST```: Stacked ST
 
 ### References
-
-<a name="Hal09"></a>**[Hal09]** M. Hall, E. Frank, G. Holmes, B. Pfahringer, P. Reutemann, and I. H. Witten. (2009). The WEKA data mining software: an update. ACM SIGKDD explorations newsletter, 11(1), 10-18.
-
 <a name="Tso11"></a>**[Tso11]** G. Tsoumakas, E. Spyromitros-Xioufis, J. Vilcek, and I. Vlahavas. (2011). Mulan: A java library for multi-label learning. Journal of Machine Learning Research, 12, 2411-2414.
-
-<a name="Ven08"></a>**[Ven08]** S. Ventura, C. Romero, A. Zafra, J. A. Delgado, and C. Hervás. (2008). JCLEC: a Java framework for evolutionary computation. Soft Computing, 12(4), 381-392.
