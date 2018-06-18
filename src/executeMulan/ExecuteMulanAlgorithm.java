@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import mulan.classifier.MultiLabelLearner;
 import mulan.data.MultiLabelInstances;
 import mulan.evaluation.Evaluation;
 import mulan.evaluation.Evaluator;
@@ -120,8 +119,8 @@ public class ExecuteMulanAlgorithm {
         // add confidence measures if applicable
         measures.add(new MeanAveragePrecision(numOfLabels));
         measures.add(new GeometricMeanAveragePrecision(numOfLabels));
-        measures.add(new MicroAUC(numOfLabels));
-        measures.add(new MacroAUC(numOfLabels));
+//        measures.add(new MicroAUC(numOfLabels));
+//        measures.add(new MacroAUC(numOfLabels));
 
         return measures;
     }

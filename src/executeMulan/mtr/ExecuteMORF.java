@@ -1,7 +1,6 @@
 package executeMulan.mtr;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import executeMulan.ExecuteMulanAlgorithm;
@@ -9,11 +8,10 @@ import mulan.data.MultiLabelInstances;
 import mulan.evaluation.Evaluation;
 import mulan.evaluation.Evaluator;
 import mulan.evaluation.measure.*;
-import mulan.regressor.transformation.EnsembleOfRegressorChains;
-import mulan.regressor.transformation.RegressorChain;
+import mulan.regressor.clus.ClusRandomForest;
 
 
-public class EjecutarERC extends ExecuteMulanAlgorithm {
+public class ExecuteMORF extends ExecuteMulanAlgorithm {
 	
 	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter)
 	{
@@ -31,7 +29,7 @@ public class EjecutarERC extends ExecuteMulanAlgorithm {
             
             pw = new PrintWriter(new FileWriter(ovalue, true));
             
-            EnsembleOfRegressorChains learner = null;   
+            ClusRandomForest learner = null;   
             
             long time_in, time_fin, total_time;
             
@@ -40,9 +38,9 @@ public class EjecutarERC extends ExecuteMulanAlgorithm {
         	   time_in = System.currentTimeMillis();
         	   
         	   //Seeds are 10, 20, 30, ...
-        	   learner = new EnsembleOfRegressorChains();
-        	   learner.setSeed(i*10);
-        	   learner.setMeta(RegressorChain.metaType.INSAMPLE);
+        	   learner = new ClusRandomForest("libs/Clus.jar", "andro1", 10);
+//        	   learner.setSeed(i*10);
+//        	   learner.setMeta(RegressorChain.metaType.INSAMPLE);
    	        
     	       learner.build(trainingSet);
     	       
@@ -87,7 +85,7 @@ public class EjecutarERC extends ExecuteMulanAlgorithm {
     	       
     	       String [] p = tvalue.split("\\/");
     	       String datasetName = p[p.length-1].split("\\.")[0];                   
-               pw.print("ERC_" + datasetName + "_s" + (i*10) + ";");
+               pw.print("MORF_" + datasetName + "_s" + (i*10) + ";");
                
                for(Measure m : results.getMeasures())
                {

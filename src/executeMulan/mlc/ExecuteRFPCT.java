@@ -18,7 +18,7 @@ import mulan.evaluation.measure.*;
 
 public class ExecuteRFPCT extends ExecuteMulanAlgorithm {
 	
-	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter)
+	public void execute(String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter)
 	{		
 		 try{
 			 prepareExecution(tvalue, Tvalue, xvalue, ovalue);
@@ -30,7 +30,7 @@ public class ExecuteRFPCT extends ExecuteMulanAlgorithm {
 			 {
 				time_in = System.currentTimeMillis();
 				 
-          	   	learner = new RFPCT("Clus.jar", 10, i*10);
+          	   	learner = new RFPCT("libs/Clus.jar", 10, i*10);
 
           	   	learner.build(trainingSet);
     	       
@@ -71,7 +71,7 @@ public class ExecuteRFPCT extends ExecuteMulanAlgorithm {
 	public static LabelMatrix getLabelsClus(int nInstances, int nLabels) throws FileNotFoundException, IOException{
 		LabelMatrix lm = new LabelMatrix(nInstances, nLabels);
 		
-		Instances inst = new Instances(new FileReader("Clus.jardata-train.test.pred.arff"));
+		Instances inst = new Instances(new FileReader("libs/Clus.jardata-train.test.pred.arff"));
 
 //		System.out.println(inst.get(0).toString());
 //		for(int i=0; i<inst.numAttributes(); i++){

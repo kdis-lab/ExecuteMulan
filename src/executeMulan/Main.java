@@ -39,7 +39,7 @@ public class Main {
 			//Regression algorithms
 		System.out.println("\t\tRegression algorithms:");
 		System.out.println("\t\t\tERC -> Ensemble of Regressor Chains");
-		System.out.println("\t\t\tMORF -> Multi-Output Random Forest");
+		//System.out.println("\t\t\tMORF -> Multi-Output Random Forest");
 		System.out.println("\t\t\tRC -> Regressor Chains");
 		System.out.println("\t\t\tRLC -> Random Linear Combinations Normalized");
 		System.out.println("\t\t\tST -> Single Target");
@@ -201,26 +201,26 @@ public class Main {
 		else if(avalue.equalsIgnoreCase("RFPCT"))
 		{
 			ExecuteRFPCT a = new ExecuteRFPCT();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
 		}
 		else if(avalue.equalsIgnoreCase("ERC"))
 		{
-			EjecutarERC a = new EjecutarERC();
+			ExecuteERC a = new ExecuteERC();
 			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
 		}
-		else if(avalue.equalsIgnoreCase("MORF"))
-		{
-			EjecutarMORF a = new EjecutarMORF();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
-		}
+//		else if(avalue.equalsIgnoreCase("MORF"))
+//		{
+//			ExecuteMORF a = new ExecuteMORF();
+//			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+//		}
 		else if(avalue.equalsIgnoreCase("RC"))
 		{
-			EjecutarRC a = new EjecutarRC();
+			ExecuteRC a = new ExecuteRC();
 			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
 		}
 		else if(avalue.equalsIgnoreCase("RLC"))
 		{
-			EjecutarRLC a = new EjecutarRLC();
+			ExecuteRLC a = new ExecuteRLC();
 			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
 		}
 		else if(avalue.equalsIgnoreCase("ST"))
@@ -230,8 +230,8 @@ public class Main {
 		}
 		else if(avalue.equalsIgnoreCase("SST"))
 		{
-			EjecutarSST a = new EjecutarSST();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			ExecuteSST a = new ExecuteSST();
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
 		}
 		else
 		{
