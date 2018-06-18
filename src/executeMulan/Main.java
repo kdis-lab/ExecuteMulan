@@ -39,7 +39,7 @@ public class Main {
 			//Regression algorithms
 		System.out.println("\t\tRegression algorithms:");
 		System.out.println("\t\t\tERC -> Ensemble of Regressor Chains");
-		//System.out.println("\t\t\tMORF -> Multi-Output Random Forest");
+//		System.out.println("\t\t\tMORF -> Multi-Output Random Forest");
 		System.out.println("\t\t\tRC -> Regressor Chains");
 		System.out.println("\t\t\tRLC -> Random Linear Combinations Normalized");
 		System.out.println("\t\t\tST -> Single Target");
@@ -236,7 +236,7 @@ public class Main {
 		else
 		{
 			showUse();
-			System.out.println("The algorithm is not defined" + avalue);
+			System.out.println("The algorithm \'" + avalue + "\' is not defined");
 			System.exit(-1);
 		}
 	}
