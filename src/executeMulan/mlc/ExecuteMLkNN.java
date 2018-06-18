@@ -18,7 +18,7 @@ public class ExecuteMLkNN extends ExecuteMulanAlgorithm {
         	learner = new MLkNN();
     	    learner.build(trainingSet);
     	       
-    	    measures = prepareMeasuresClassification(trainingSet, learner);    	       
+    	    measures = prepareMeasuresClassification(trainingSet);    	       
     	    results = eval.evaluate(learner, testSet, measures);
     	       
     	    time_fin = System.currentTimeMillis();

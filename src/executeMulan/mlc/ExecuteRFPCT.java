@@ -34,7 +34,7 @@ public class ExecuteRFPCT extends ExecuteMulanAlgorithm {
 
           	   	learner.build(trainingSet);
     	       
-	    	    measures = prepareMeasuresClassification(trainingSet, learner);    	       
+	    	    measures = prepareMeasuresClassification(trainingSet);    	       
 	    	    results = eval.evaluate(learner, testSet, measures);
 	    	    
 	    	    LabelMatrix lm = getLabelsClus(testSet.getNumInstances(), testSet.getNumLabels());

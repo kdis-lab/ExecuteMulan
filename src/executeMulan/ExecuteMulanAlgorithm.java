@@ -83,7 +83,7 @@ public class ExecuteMulanAlgorithm {
 		System.exit(-1);
 	}
 	
-	protected static List<Measure> prepareMeasuresClassification(MultiLabelInstances mlTrainData, MultiLabelLearner learner) {
+	protected static List<Measure> prepareMeasuresClassification(MultiLabelInstances mlTrainData) {
         List<Measure> measures = new ArrayList<Measure>();
 
         int numOfLabels = mlTrainData.getNumLabels();

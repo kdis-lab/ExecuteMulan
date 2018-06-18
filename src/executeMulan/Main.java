@@ -225,8 +225,8 @@ public class Main {
 		}
 		else if(avalue.equalsIgnoreCase("ST"))
 		{
-			EjecutarST a = new EjecutarST();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			ExecuteST a = new ExecuteST();
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
 		}
 		else if(avalue.equalsIgnoreCase("SST"))
 		{

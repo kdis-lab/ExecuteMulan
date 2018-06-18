@@ -19,7 +19,7 @@ public class ExecuteCLR extends ExecuteMulanAlgorithm {
         	learner = new CalibratedLabelRanking(new J48());
     	    learner.build(trainingSet);
     	       
-    	    measures = prepareMeasuresClassification(trainingSet, learner);    	       
+    	    measures = prepareMeasuresClassification(trainingSet);    	       
     	    results = eval.evaluate(learner, testSet, measures);
     	       
     	    time_fin = System.currentTimeMillis();

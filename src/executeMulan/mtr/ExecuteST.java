@@ -1,24 +1,25 @@
-package executeMulan.mlc;
+package executeMulan.mtr;
 import executeMulan.ExecuteMulanAlgorithm;
-import mulan.classifier.meta.HOMER;
+import mulan.regressor.transformation.SingleTargetRegressor;
+import weka.classifiers.trees.REPTree;
 
-public class ExecuteHOMER extends ExecuteMulanAlgorithm {
+public class ExecuteST extends ExecuteMulanAlgorithm {
 	
-	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue)
+	public void execute(String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue)
 	{		
 		 try{
-			 prepareExecution(tvalue, Tvalue, xvalue, ovalue);
+			prepareExecution(tvalue, Tvalue, xvalue, ovalue);
 			 
-			 HOMER learner = null;
+			SingleTargetRegressor learner = null;
             
             /* Only one execution (does not use random numbers) */
 			
         	time_in = System.currentTimeMillis();
         	   
-        	learner = new HOMER();
+        	learner = new SingleTargetRegressor(new REPTree());
     	    learner.build(trainingSet);
     	       
-    	    measures = prepareMeasuresClassification(trainingSet);    	       
+    	    measures = prepareMeasuresRegression(trainingSet, testSet);    	       
     	    results = eval.evaluate(learner, testSet, measures);
     	       
     	    time_fin = System.currentTimeMillis();
@@ -28,7 +29,7 @@ public class ExecuteHOMER extends ExecuteMulanAlgorithm {
     	    System.out.println("Execution time (ms): " + total_time);
 
     	    printHeader(lvalue);
-    	    printResults(Tvalue, lvalue, "HOMER");
+    	    printResults(Tvalue, lvalue, "ST");
 		}
         catch(Exception e1)
     	{

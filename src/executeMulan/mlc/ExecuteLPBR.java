@@ -23,7 +23,7 @@ public class ExecuteLPBR extends ExecuteMulanAlgorithm {
         	learner = new SubsetLearner(new GreedyLabelClustering(new BinaryRelevance(new J48()), new J48(), new ConditionalDependenceIdentifier(new J48())), new LabelPowerset(new J48()), new J48());
     	    learner.build(trainingSet);
     	       
-    	    measures = prepareMeasuresClassification(trainingSet, learner);    	       
+    	    measures = prepareMeasuresClassification(trainingSet);    	       
     	    results = eval.evaluate(learner, testSet, measures);
     	       
     	    time_fin = System.currentTimeMillis();

@@ -18,7 +18,7 @@ public class ExecuteMLS extends ExecuteMulanAlgorithm {
         	learner = new MultiLabelStacking();
     	    learner.build(trainingSet);
     	       
-    	    measures = prepareMeasuresClassification(trainingSet, learner);    	       
+    	    measures = prepareMeasuresClassification(trainingSet);    	       
     	    results = eval.evaluate(learner, testSet, measures);
     	       
     	    time_fin = System.currentTimeMillis();

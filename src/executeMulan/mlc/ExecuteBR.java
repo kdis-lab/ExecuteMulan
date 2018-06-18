@@ -19,7 +19,7 @@ public class ExecuteBR extends ExecuteMulanAlgorithm {
         	learner = new BinaryRelevance(new J48());
     	    learner.build(trainingSet);
     	       
-    	    measures = prepareMeasuresClassification(trainingSet, learner);    	       
+    	    measures = prepareMeasuresRegression(trainingSet, testSet);    	       
     	    results = eval.evaluate(learner, testSet, measures);
     	       
     	    time_fin = System.currentTimeMillis();

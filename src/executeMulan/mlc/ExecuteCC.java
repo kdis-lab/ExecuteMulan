@@ -38,7 +38,7 @@ public class ExecuteCC extends ExecuteMulanAlgorithm {
 
           	   	learner.build(trainingSet);
     	       
-	    	    measures = prepareMeasuresClassification(trainingSet, learner);    	       
+	    	    measures = prepareMeasuresClassification(trainingSet);    	       
 	    	    results = eval.evaluate(learner, testSet, measures);
 	    	       
 	    	    time_fin = System.currentTimeMillis();

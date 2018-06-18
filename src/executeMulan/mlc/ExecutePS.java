@@ -18,7 +18,7 @@ public class ExecutePS extends ExecuteMulanAlgorithm {
         	learner = new PrunedSets();
     	    learner.build(trainingSet);
     	       
-    	    measures = prepareMeasuresClassification(trainingSet, learner);    	       
+    	    measures = prepareMeasuresClassification(trainingSet);    	       
     	    results = eval.evaluate(learner, testSet, measures);
     	       
     	    time_fin = System.currentTimeMillis();

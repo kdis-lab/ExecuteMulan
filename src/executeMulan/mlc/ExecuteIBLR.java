@@ -18,7 +18,7 @@ public class ExecuteIBLR extends ExecuteMulanAlgorithm {
         	learner = new IBLR_ML();
     	    learner.build(trainingSet);
     	       
-    	    measures = prepareMeasuresClassification(trainingSet, learner);    	       
+    	    measures = prepareMeasuresClassification(trainingSet);    	       
     	    results = eval.evaluate(learner, testSet, measures);
     	       
     	    time_fin = System.currentTimeMillis();
