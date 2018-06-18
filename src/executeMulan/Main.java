@@ -104,7 +104,6 @@ public class Main {
 			}
 			
 			ivalueStr = Utils.getOption("i", args);
-			System.out.println("ivalueStr: " + ivalueStr);
 			if(ivalueStr.length() != 0) {
 				ivalue = Integer.parseInt(ivalueStr);
 			}
@@ -132,7 +131,6 @@ public class Main {
 		else if(avalue.equalsIgnoreCase("CC"))
 		{
 			ExecuteCC a = new ExecuteCC();
-			System.out.println("ivalue: " + ivalue);
 			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
 		}
 		else if(avalue.equalsIgnoreCase("CLR"))
