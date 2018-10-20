@@ -2,7 +2,7 @@
 
 [Mulan](http://mulan.sourceforge.net/) is an open-source Java library for learning from multi-label datasets; including both Multi-Label Classification (MLC) and Multi-Target Regression (MTR) methods [[Tso11]](#Tso11). The Mulan library only provides a Java API, but no any GUI or command-line interface to execute its methods.
 
-In this repository, we created an executable .jar file to execute MLC and MTR methods from the Mulan library. The aim of this project was to have a personal way to execute experiments with the different methods as simple as possible. The .jar file is available to download at the [latest release](https://github.com/i02momuj/ExecuteMulan/releases/tag/v1.1).
+In this repository, we created an executable .jar file to execute MLC and MTR methods from the Mulan library. The aim of this project was to have a personal way to execute experiments with the different methods as simple as possible. The .jar file is available to download at the [latest release](https://github.com/i02momuj/ExecuteMulan/releases/tag/v1.1). This code was implemented for its use in the article [[Moy18]](#Moy18).
 
 To execute it, the following command have to be executed in a console:
 ```sh
@@ -49,3 +49,4 @@ Two multi-label datasets have been included in the repository as example; a wide
 
 ### References
 <a name="Tso11"></a>**[Tso11]** G. Tsoumakas, E. Spyromitros-Xioufis, J. Vilcek, and I. Vlahavas. (2011). Mulan: A java library for multi-label learning. Journal of Machine Learning Research, 12, 2411-2414.
+<a name="Moy18"></a>**[Moy18]** J. M. Moyano and E. L. Gibaja and K. J. Cios and S. Ventura. (2018). Review of ensembles of multi-label classifiers: Models, experimental study and prospects. Information Fusion, 44, 33-45.
