@@ -26,7 +26,9 @@ public class Main {
 		System.out.println("\t\t\tCLR -> Calibrated Label Ranking");
 		System.out.println("\t\t\tEBR -> Ensemble of Binary Relevance");
 		System.out.println("\t\t\tECC -> Ensemble of Classifier Chains");
+		System.out.println("\t\t\tELP -> Ensemble of Label Powersets");
 		System.out.println("\t\t\tEPS -> Ensemble of Pruned Sets");
+		System.out.println("\t\t\tEPS_1 -> Ensemble of Pruned Sets (with no pruning)");
 		System.out.println("\t\t\tHOMER -> HOMER");
 		System.out.println("\t\t\tIBLR -> Instance-Based Logistic Regression");
 		System.out.println("\t\t\tLP -> Label Powerset");
@@ -151,6 +153,11 @@ public class Main {
 		else if(avalue.equalsIgnoreCase("EPS"))
 		{
 			ExecuteEPS a = new ExecuteEPS();
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+		}
+		else if(avalue.equalsIgnoreCase("EPS_1"))
+		{
+			ExecuteEPS_1 a = new ExecuteEPS_1();
 			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
 		}
 		else if(avalue.equalsIgnoreCase("CDE"))

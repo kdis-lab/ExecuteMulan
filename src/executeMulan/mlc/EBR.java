@@ -30,24 +30,20 @@ import weka.filters.Filter;
 import weka.filters.unsupervised.instance.RemovePercentage;
 
 /**
- * <p>Implementation of the Ensemble of Classifier Chains(ECC) algorithm.</p>
- * <p>For more information, see <em>Read, J.; Pfahringer, B.; Holmes, G., Frank,
- * E. (2011) Classifier Chains for Multi-label Classification. Machine Learning.
- * 85(3):335-359.</em></p>
- *
- * @author Eleftherios Spyromitros-Xioufis
- * @author Konstantinos Sechidis
- * @author Grigorios Tsoumakas
- * @version 2012.02.27
+ * 
  */
 public class EBR extends TransformationBasedMultiLabelLearner {
 
     /**
-     * The number of classifier chain models
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+     * The number of br models
      */
     protected int numOfModels;
     /**
-     * An array of ClassifierChain models
+     * An array of br models
      */
     protected BinaryRelevance[] ensemble;
     /**
@@ -142,7 +138,7 @@ public class EBR extends TransformationBasedMultiLabelLearner {
     /**
      * Creates a new object
      *
-     * @param classifier the base classifier for each ClassifierChain model
+     * @param classifier the base classifier for each br model
      * @param aNumOfModels the number of models
      * @param doUseConfidences whether to use confidences or not
      * @param doUseSamplingWithReplacement whether to use sampling with replacement or not 
@@ -163,7 +159,7 @@ public class EBR extends TransformationBasedMultiLabelLearner {
         Instances dataSet = new Instances(trainingSet.getDataSet());
 
         for (int i = 0; i < numOfModels; i++) {
-            debug("ECC Building Model:" + (i + 1) + "/" + numOfModels);
+            debug("EBR Building Model:" + (i + 1) + "/" + numOfModels);
             Instances sampledDataSet;
             dataSet.randomize(rand);
             if (useSamplingWithReplacement) {
