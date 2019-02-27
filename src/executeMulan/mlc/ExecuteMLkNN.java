@@ -16,10 +16,16 @@ public class ExecuteMLkNN extends ExecuteMulanAlgorithm {
         	time_in = System.currentTimeMillis();
         	   
         	learner = new MLkNN();
-    	    learner.build(trainingSet);
-    	       
-    	    measures = prepareMeasuresClassification(trainingSet);    	       
-    	    results = eval.evaluate(learner, testSet, measures);
+    	    
+        	measures = prepareMeasuresClassification(trainingSet);    	
+        	
+        	if(nFolds > 0) {
+        		mResults = eval.crossValidate(learner, trainingSet, measures, nFolds);
+        	}
+        	else {
+        		learner.build(trainingSet);  
+        	    results = eval.evaluate(learner, testSet, measures);
+        	}
     	       
     	    time_fin = System.currentTimeMillis();
     	      
@@ -28,7 +34,12 @@ public class ExecuteMLkNN extends ExecuteMulanAlgorithm {
     	    System.out.println("Execution time (ms): " + total_time);
 
     	    printHeader(lvalue);
-    	    printResults(Tvalue, lvalue, "MLkNN");
+    	    if(nFolds <= 0) {
+    	    	printResults(Tvalue, lvalue, "MLkNN");
+    	    }
+    	    else {
+    	    	printResultsCV(tvalue, lvalue, "MLkNN");
+    	    }
 		}
         catch(Exception e1)
     	{
