@@ -10,8 +10,8 @@ public class Main {
 		System.out.println("Parameters:");
 		
 		//Files
-		System.out.println("\t -t Train .arff file");
-		System.out.println("\t -T Test .arff file");
+		System.out.println("\t -t Train .arff file (full data in case of CV)");
+		System.out.println("\t -T Test .arff file (do not use if CV)");
 		System.out.println("\t -x  Labels .xml file");
 		
 		//Algorithm
@@ -47,6 +47,9 @@ public class Main {
 		System.out.println("\t\t\tST -> Single Target");
 		System.out.println("\t\t\tSST -> Stacked ST");
 		
+		//Number of folds if cross-validation
+		System.out.println("\t -f Number of folds for cross-validation. If not set, do not perform CV.");
+		
 		//Number of seed numbers == Number of executions
 		System.out.println("\t -i Number of random seeds");
 		
@@ -59,12 +62,14 @@ public class Main {
 	
 	public static void main(String [] args)
 	{		
-		String tvalue=null, Tvalue=null, xvalue=null, avalue=null, ovalue=null, lvalueStr=null, ivalueStr=null;
+		String tvalue=null, Tvalue=null, xvalue=null, avalue=null, ovalue=null, lvalueStr=null, ivalueStr=null, fvalueStr=null;
 		
 		//By default, macro measures are not shown for each label
 		boolean lvalue = false;
 		//By default, 10 random seeds are used
 		int ivalue = 10;
+		//By default, cross-validation is not performed
+		int fvalue = -1;
 		
 		try {
 			tvalue = Utils.getOption("t", args);
@@ -73,13 +78,10 @@ public class Main {
 			avalue = Utils.getOption("a", args);
 			ovalue = Utils.getOption("o", args);
 			
-			if((tvalue.length() == 0) || (Tvalue.length() == 0) || (xvalue.length() == 0) || (avalue.length() == 0) || (ovalue.length() == 0))
+			if((tvalue.length() == 0) || (xvalue.length() == 0) || (avalue.length() == 0) || (ovalue.length() == 0))
 			{
 				if(tvalue.length() == 0) {
 					System.out.println("Please enter the train dataset filename.");
-				}
-				if(Tvalue.length() == 0) {
-					System.out.println("Please enter the test dataset filename.");
 				}
 				if(xvalue.length() == 0) {
 					System.out.println("Please enter the xml dataset filename.");
@@ -109,6 +111,24 @@ public class Main {
 			if(ivalueStr.length() != 0) {
 				ivalue = Integer.parseInt(ivalueStr);
 			}
+			
+			fvalueStr = Utils.getOption("f", args);
+			if(fvalueStr.length() != 0) {
+				fvalue = Integer.parseInt(fvalueStr);
+			}
+			
+			if(fvalue > 0 && (Tvalue.length() > 0)) {
+				System.out.println("Including both test file and CV procedure is not allowed.");
+				showUse();
+				System.exit(1);
+			}
+			else if(fvalue <= 0 && (Tvalue.length() == 0)) {
+				System.out.println("Please set test file or number of folds for CV procedure.");
+				showUse();
+				System.exit(1);
+			}
+			
+			
 		} catch (Exception e) {
 			showUse();
 			System.exit(1);
@@ -118,102 +138,102 @@ public class Main {
 		if(avalue.equalsIgnoreCase("AdaBoostMH"))
 		{
 			ExecuteAdaBoostMH a = new ExecuteAdaBoostMH();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("BPMLL"))
 		{
 			ExecuteBPMLL a = new ExecuteBPMLL();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("BR"))
 		{			
 			ExecuteBR a = new ExecuteBR();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("CC"))
 		{
 			ExecuteCC a = new ExecuteCC();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("CLR"))
 		{
 			ExecuteCLR a = new ExecuteCLR();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("EBR"))
 		{
 			ExecuteEBR a = new ExecuteEBR();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("ECC"))
 		{
 			ExecuteECC a = new ExecuteECC();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("EPS"))
 		{
 			ExecuteEPS a = new ExecuteEPS();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("EPS_1"))
 		{
 			ExecuteEPS_1 a = new ExecuteEPS_1();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("CDE"))
 		{
 			ExecuteCDE a = new ExecuteCDE();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("HOMER"))
 		{
 			ExecuteHOMER a = new ExecuteHOMER();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("IBLR"))
 		{
 			ExecuteIBLR a = new ExecuteIBLR();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("LP"))
 		{
 			ExecuteLP a = new ExecuteLP();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("LPBR"))
 		{
 			ExecuteLPBR a = new ExecuteLPBR();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("MLKNN"))
 		{
 			ExecuteMLkNN a = new ExecuteMLkNN();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("MLS"))
 		{
 			ExecuteMLS a = new ExecuteMLS();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("PS"))
 		{
 			ExecutePS a = new ExecutePS();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, fvalue);
 		}
 		else if(avalue.toUpperCase().equalsIgnoreCase("RAKEL"))
 		{
 			ExecuteRAkEL a = new ExecuteRAkEL();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("RFPCT"))
 		{
 			ExecuteRFPCT a = new ExecuteRFPCT();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("ERC"))
 		{
 			ExecuteERC a = new ExecuteERC();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue, fvalue);
 		}
 //		else if(avalue.equalsIgnoreCase("MORF"))
 //		{
@@ -223,22 +243,22 @@ public class Main {
 		else if(avalue.equalsIgnoreCase("RC"))
 		{
 			ExecuteRC a = new ExecuteRC();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("RLC"))
 		{
 			ExecuteRLC a = new ExecuteRLC();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, ivalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("ST"))
 		{
 			ExecuteST a = new ExecuteST();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, fvalue);
 		}
 		else if(avalue.equalsIgnoreCase("SST"))
 		{
 			ExecuteSST a = new ExecuteSST();
-			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue);
+			a.execute(tvalue, Tvalue, xvalue, ovalue, lvalue, fvalue);
 		}
 		else
 		{

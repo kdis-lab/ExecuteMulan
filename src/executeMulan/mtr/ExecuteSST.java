@@ -6,10 +6,10 @@ import weka.classifiers.trees.REPTree;
 
 public class ExecuteSST extends ExecuteMulanAlgorithm {
 	
-	public void execute(String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue)
+	public void execute(String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int fvalue)
 	{		
 		 try{
-			prepareExecution(tvalue, Tvalue, xvalue, ovalue);
+			prepareExecution(tvalue, Tvalue, xvalue, ovalue, fvalue);
 			 
 			MultiTargetStacking learner = null;
             
@@ -19,10 +19,18 @@ public class ExecuteSST extends ExecuteMulanAlgorithm {
         	   
         	learner = new MultiTargetStacking(new REPTree());
         	learner.setMeta(metaType.INSAMPLE);
-    	    learner.build(trainingSet);
-    	       
-    	    measures = prepareMeasuresRegression(trainingSet, testSet);    	       
-    	    results = eval.evaluate(learner, testSet, measures);
+    	    
+        	if(nFolds > 0) {
+        		mResults = eval.crossValidate(learner, trainingSet, nFolds);
+        		for(int m=0; m<mResults.getEvaluations().get(0).getMeasures().size(); m++) {
+        			measures.add(mResults.getEvaluations().get(0).getMeasures().get(m));
+        		}
+        	}
+        	else {
+        		learner.build(trainingSet);
+        		measures = prepareMeasuresRegression(trainingSet, testSet);
+        	    results = eval.evaluate(learner, testSet, measures);
+        	}
     	       
     	    time_fin = System.currentTimeMillis();
     	      
@@ -31,7 +39,12 @@ public class ExecuteSST extends ExecuteMulanAlgorithm {
     	    System.out.println("Execution time (ms): " + total_time);
 
     	    printHeader(lvalue);
-    	    printResults(Tvalue, lvalue, "SST");
+    	    if(nFolds <= 0) {
+    	    	printResults(Tvalue, lvalue, "SST");
+    	    }
+    	    else {
+    	    	printResultsCV(tvalue, lvalue, "SST");
+    	    }
 		}
         catch(Exception e1)
     	{

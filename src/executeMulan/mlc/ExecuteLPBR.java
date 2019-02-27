@@ -9,10 +9,10 @@ import weka.classifiers.trees.J48;
 
 public class ExecuteLPBR extends ExecuteMulanAlgorithm {
 	
-	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue)
+	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int fvalue)
 	{		
 		 try{
-			 prepareExecution(tvalue, Tvalue, xvalue, ovalue);
+			 prepareExecution(tvalue, Tvalue, xvalue, ovalue, fvalue);
 			 
 			 SubsetLearner learner = null;
             
@@ -21,10 +21,16 @@ public class ExecuteLPBR extends ExecuteMulanAlgorithm {
         	time_in = System.currentTimeMillis();
         	   
         	learner = new SubsetLearner(new GreedyLabelClustering(new BinaryRelevance(new J48()), new J48(), new ConditionalDependenceIdentifier(new J48())), new LabelPowerset(new J48()), new J48());
-    	    learner.build(trainingSet);
-    	       
-    	    measures = prepareMeasuresClassification(trainingSet);    	       
-    	    results = eval.evaluate(learner, testSet, measures);
+    	    
+        	measures = prepareMeasuresClassification(trainingSet);    	
+        	
+        	if(nFolds > 0) {
+        		mResults = eval.crossValidate(learner, trainingSet, measures, nFolds);
+        	}
+        	else {
+        		learner.build(trainingSet);  
+        	    results = eval.evaluate(learner, testSet, measures);
+        	}
     	       
     	    time_fin = System.currentTimeMillis();
     	      
@@ -33,7 +39,12 @@ public class ExecuteLPBR extends ExecuteMulanAlgorithm {
     	    System.out.println("Execution time (ms): " + total_time);
 
     	    printHeader(lvalue);
-    	    printResults(Tvalue, lvalue, "LPBR");
+    	    if(nFolds <= 0) {
+    	    	printResults(Tvalue, lvalue, "LPBR");
+    	    }
+    	    else {
+    	    	printResultsCV(tvalue, lvalue, "LPBR");
+    	    }
 		}
         catch(Exception e1)
     	{

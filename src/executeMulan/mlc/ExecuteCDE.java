@@ -8,10 +8,10 @@ import weka.classifiers.trees.J48;
 
 public class ExecuteCDE extends ExecuteMulanAlgorithm {
 	
-	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter)
+	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter, int fvalue)
 	{		
 		 try{
-			 prepareExecution(tvalue, Tvalue, xvalue, ovalue);
+			 prepareExecution(tvalue, Tvalue, xvalue, ovalue, fvalue);
 			 
 			 EnsembleOfSubsetLearners learner = null;
             
@@ -23,12 +23,17 @@ public class ExecuteCDE extends ExecuteMulanAlgorithm {
 				 learner.setSeed(i*10);
 	        	 learner.setNumOfRandomPartitions(10000);
 
-          	   	learner.build(trainingSet);
-    	       
-	    	    measures = prepareMeasuresClassification(trainingSet);    	       
-	    	    results = eval.evaluate(learner, testSet, measures);
+	        	 measures = prepareMeasuresClassification(trainingSet);    	
+	         	
+	         	if(nFolds > 0) {
+	         		mResults = eval.crossValidate(learner, trainingSet, measures, nFolds);
+	         	}
+	         	else {
+	         		learner.build(trainingSet);  
+	         	    results = eval.evaluate(learner, testSet, measures);
+	         	}
 	    	       
-	    	    time_fin = System.currentTimeMillis();
+	         	time_fin = System.currentTimeMillis();
 	    	      
 	    	    total_time = time_fin - time_in;
 	
@@ -39,7 +44,12 @@ public class ExecuteCDE extends ExecuteMulanAlgorithm {
 	    	    	printHeader(lvalue);
 	    	    }
 	    	    
-	    	    printResults(Tvalue, lvalue, "CDE");
+	    	    if(nFolds <= 0) {
+	    	    	printResults(Tvalue, lvalue, "CDE");
+	    	    }
+	    	    else {
+	    	    	printResultsCV(tvalue, lvalue, "CDE");
+	    	    }
 	    	    
 			 }//End for
 			 

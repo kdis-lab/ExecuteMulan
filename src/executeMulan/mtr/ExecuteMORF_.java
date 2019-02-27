@@ -11,7 +11,7 @@ import mulan.evaluation.measure.*;
 import mulan.regressor.clus.ClusRandomForest;
 
 
-public class ExecuteMORF extends ExecuteMulanAlgorithm {
+public class ExecuteMORF_ extends ExecuteMulanAlgorithm {
 	
 	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter)
 	{

@@ -4,10 +4,10 @@ import mulan.classifier.meta.HOMER;
 
 public class ExecuteHOMER extends ExecuteMulanAlgorithm {
 	
-	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue)
+	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int fvalue)
 	{		
 		 try{
-			 prepareExecution(tvalue, Tvalue, xvalue, ovalue);
+			 prepareExecution(tvalue, Tvalue, xvalue, ovalue, fvalue);
 			 
 			 HOMER learner = null;
             
@@ -16,10 +16,16 @@ public class ExecuteHOMER extends ExecuteMulanAlgorithm {
         	time_in = System.currentTimeMillis();
         	   
         	learner = new HOMER();
-    	    learner.build(trainingSet);
-    	       
-    	    measures = prepareMeasuresClassification(trainingSet);    	       
-    	    results = eval.evaluate(learner, testSet, measures);
+    	    
+        	measures = prepareMeasuresClassification(trainingSet);    	
+        	
+        	if(nFolds > 0) {
+        		mResults = eval.crossValidate(learner, trainingSet, measures, nFolds);
+        	}
+        	else {
+        		learner.build(trainingSet);  
+        	    results = eval.evaluate(learner, testSet, measures);
+        	}
     	       
     	    time_fin = System.currentTimeMillis();
     	      
@@ -28,7 +34,12 @@ public class ExecuteHOMER extends ExecuteMulanAlgorithm {
     	    System.out.println("Execution time (ms): " + total_time);
 
     	    printHeader(lvalue);
-    	    printResults(Tvalue, lvalue, "HOMER");
+    	    if(nFolds <= 0) {
+    	    	printResults(Tvalue, lvalue, "HOMER");
+    	    }
+    	    else {
+    	    	printResultsCV(tvalue, lvalue, "HOMER");
+    	    }
 		}
         catch(Exception e1)
     	{

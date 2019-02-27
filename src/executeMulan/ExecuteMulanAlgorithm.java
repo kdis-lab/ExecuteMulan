@@ -7,6 +7,7 @@ import java.util.List;
 import mulan.data.MultiLabelInstances;
 import mulan.evaluation.Evaluation;
 import mulan.evaluation.Evaluator;
+import mulan.evaluation.MultipleEvaluation;
 import mulan.evaluation.measure.*;
 import mulan.evaluation.measures.regression.example.ExampleBasedRMaxSE;
 import mulan.evaluation.measures.regression.macro.MacroMAE;
@@ -24,16 +25,25 @@ public class ExecuteMulanAlgorithm {
 	 public MultiLabelInstances testSet = null;
 	 public Evaluator eval = new Evaluator();
 	 public Evaluation results;
+	 public MultipleEvaluation mResults;
 	 public List<Measure> measures = new ArrayList<Measure>();
 	 public long time_in, time_fin, total_time;
+	 public int nFolds;
 
-	public void prepareExecution(String tvalue, String Tvalue, String xvalue, String ovalue) {
+	public void prepareExecution(String tvalue, String Tvalue, String xvalue, String ovalue, int fvalue) {
 		try {
 			trainingSet = new MultiLabelInstances(tvalue, xvalue);
-			testSet = new MultiLabelInstances(Tvalue, xvalue);
+			
+			if(fvalue <= 0) {
+				testSet = new MultiLabelInstances(Tvalue, xvalue);
+			}
+			else {
+				testSet = null;
+			}
+			nFolds = fvalue;
 			
 			pw = new PrintWriter(new FileWriter(ovalue, true));
-			
+				
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -73,6 +83,27 @@ public class ExecuteMulanAlgorithm {
      	   		}
             }
         }
+        pw.print(total_time + ";");
+        pw.println();    
+	}
+	
+	public void printResultsCV(String tvalue, boolean lvalue, String algorithm) throws Exception {
+		String [] p = tvalue.split("\\/");
+		String datasetName = p[p.length-1].split("\\.")[0];                   
+        pw.print(algorithm + "_" + datasetName + ";");
+        
+        for(Measure m : measures) {
+        	pw.print(mResults.getMean(m.getName()) + ";");
+        	
+        	if((lvalue) && (m.getClass().getName().contains("Macro")))
+            {
+     	   		for(int l=0; l<trainingSet.getNumLabels(); l++)
+     	   		{
+     	   			pw.print(mResults.getMean(m.getName(), l) + ";");
+     	   		}
+            }
+        }
+        
         pw.print(total_time + ";");
         pw.println();    
 	}

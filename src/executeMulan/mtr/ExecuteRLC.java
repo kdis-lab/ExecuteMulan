@@ -5,10 +5,10 @@ import weka.classifiers.trees.REPTree;
 
 public class ExecuteRLC extends ExecuteMulanAlgorithm {
 	
-	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter)
+	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter, int fvalue)
 	{		
 		 try{
-			 prepareExecution(tvalue, Tvalue, xvalue, ovalue);
+			 prepareExecution(tvalue, Tvalue, xvalue, ovalue, fvalue);
 			 
 			 RandomLinearCombinationsNormalize learner = null;
             
@@ -19,10 +19,17 @@ public class ExecuteRLC extends ExecuteMulanAlgorithm {
 				 
 				learner = new RandomLinearCombinationsNormalize(100, i*10, new REPTree(), 2);
 
-          	   	learner.build(trainingSet);
-    	       
-	    	    measures = prepareMeasuresRegression(trainingSet, testSet);
-	    	    results = eval.evaluate(learner, testSet, measures);
+				if(nFolds > 0) {
+	        		mResults = eval.crossValidate(learner, trainingSet, nFolds);
+	        		for(int m=0; m<mResults.getEvaluations().get(0).getMeasures().size(); m++) {
+	        			measures.add(mResults.getEvaluations().get(0).getMeasures().get(m));
+	        		}
+	        	}
+	        	else {
+	        		learner.build(trainingSet);
+	        		measures = prepareMeasuresRegression(trainingSet, testSet);
+	        	    results = eval.evaluate(learner, testSet, measures);
+	        	}
 	    	       
 	    	    time_fin = System.currentTimeMillis();
 	    	      
@@ -35,7 +42,12 @@ public class ExecuteRLC extends ExecuteMulanAlgorithm {
 	    	    	printHeader(lvalue);
 	    	    }
 	    	    
-	    	    printResults(Tvalue, lvalue, "RLC");
+	    	    if(nFolds <= 0) {
+	    	    	printResults(Tvalue, lvalue, "RLC");
+	    	    }
+	    	    else {
+	    	    	printResultsCV(tvalue, lvalue, "RLC");
+	    	    }
 	    	    
 			 }//End for
 			 

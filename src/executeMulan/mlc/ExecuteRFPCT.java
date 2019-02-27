@@ -18,43 +18,47 @@ import mulan.evaluation.measure.*;
 
 public class ExecuteRFPCT extends ExecuteMulanAlgorithm {
 	
-	public void execute(String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter)
+	public void execute(String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter, int fvalue)
 	{		
 		 try{
-			 prepareExecution(tvalue, Tvalue, xvalue, ovalue);
+			 prepareExecution(tvalue, Tvalue, xvalue, ovalue, fvalue);
 			 
-			 RFPCT learner = null;
-            
-			 /* The seeds are 10, 20, 30, ... */        	   
-			 for(int i=1; i<=nIter; i++)
-			 {
-				time_in = System.currentTimeMillis();
-				 
-          	   	learner = new RFPCT("libs/Clus.jar", 10, i*10);
+			 if(nFolds > 0) {
+				 System.out.println("Not able to execute with cross-validation procedure.");
+			 }
+			 else {
+				 RFPCT learner = null;
+		            
+				 /* The seeds are 10, 20, 30, ... */        	   
+				 for(int i=1; i<=nIter; i++)
+				 {
+					time_in = System.currentTimeMillis();
+					 
+	          	   	learner = new RFPCT("libs/Clus.jar", 10, i*10);
 
-          	   	learner.build(trainingSet);
-    	       
-	    	    measures = prepareMeasuresClassification(trainingSet);    	       
-	    	    results = eval.evaluate(learner, testSet, measures);
-	    	    
-	    	    LabelMatrix lm = getLabelsClus(testSet.getNumInstances(), testSet.getNumLabels());
-	    	    results = evaluate(lm.realLabels, lm.predLabels, measures);
-	    	       
-	    	    time_fin = System.currentTimeMillis();
-	    	      
-	    	    total_time = time_fin - time_in;
-	
-	    	    System.out.println("Execution time (ms): " + total_time);
+	            	measures = prepareMeasuresClassification(trainingSet);    	
 
-	    	    //Print header only in first iteration
-	    	    if(i == 1) {
-	    	    	printHeader(lvalue);
-	    	    }
-	    	    
-	    	    printResults(Tvalue, lvalue, "RF-PCT");
-	    	    
-			 }//End for
-			 
+	            	learner.build(trainingSet);  
+	            	results = eval.evaluate(learner, testSet, measures);
+
+		    	    LabelMatrix lm = getLabelsClus(testSet.getNumInstances(), testSet.getNumLabels());
+		    	    results = evaluate(lm.realLabels, lm.predLabels, measures);
+		    	       
+		    	    time_fin = System.currentTimeMillis();
+		    	      
+		    	    total_time = time_fin - time_in;
+		
+		    	    System.out.println("Execution time (ms): " + total_time);
+
+		    	    //Print header only in first iteration
+		    	    if(i == 1) {
+		    	    	printHeader(lvalue);
+		    	    }
+		    	    
+		    	    printResults(Tvalue, lvalue, "RF-PCT");
+		    	    
+				 }//End for
+			 }
 		}
         catch(Exception e1)
     	{

@@ -5,10 +5,10 @@ import mulan.regressor.transformation.RegressorChain;
 
 public class ExecuteERC extends ExecuteMulanAlgorithm {
 	
-	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter)
+	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter, int fvalue)
 	{		
 		 try{
-			 prepareExecution(tvalue, Tvalue, xvalue, ovalue);
+			 prepareExecution(tvalue, Tvalue, xvalue, ovalue, fvalue);
 			 
 			 EnsembleOfRegressorChains learner = null;
             
@@ -20,12 +20,19 @@ public class ExecuteERC extends ExecuteMulanAlgorithm {
 				learner = new EnsembleOfRegressorChains();
 	        	learner.setSeed(i*10);
 	        	learner.setMeta(RegressorChain.metaType.INSAMPLE);
+  	
+	        	if(nFolds > 0) {
+	        		mResults = eval.crossValidate(learner, trainingSet, nFolds);
+	        		for(int m=0; m<mResults.getEvaluations().get(0).getMeasures().size(); m++) {
+	        			measures.add(mResults.getEvaluations().get(0).getMeasures().get(m));
+	        		}
+	        	}
+	        	else {
+	        		learner.build(trainingSet);
+	        		measures = prepareMeasuresRegression(trainingSet, testSet);
+	        	    results = eval.evaluate(learner, testSet, measures);
+	        	}
 
-          	   	learner.build(trainingSet);
-    	       
-	    	    measures = prepareMeasuresRegression(trainingSet, testSet);
-	    	    results = eval.evaluate(learner, testSet, measures);
-	    	       
 	    	    time_fin = System.currentTimeMillis();
 	    	      
 	    	    total_time = time_fin - time_in;
@@ -37,7 +44,12 @@ public class ExecuteERC extends ExecuteMulanAlgorithm {
 	    	    	printHeader(lvalue);
 	    	    }
 	    	    
-	    	    printResults(Tvalue, lvalue, "ERC");
+	    	    if(nFolds <= 0) {
+	    	    	printResults(Tvalue, lvalue, "ERC");
+	    	    }
+	    	    else {
+	    	    	printResultsCV(tvalue, lvalue, "ERC");
+	    	    }
 	    	    
 			 }//End for
 			 

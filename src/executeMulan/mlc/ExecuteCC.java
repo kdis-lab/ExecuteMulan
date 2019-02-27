@@ -7,10 +7,10 @@ import weka.classifiers.trees.J48;
 
 public class ExecuteCC extends ExecuteMulanAlgorithm {
 	
-	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter)
+	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter, int fvalue)
 	{		
 		 try{
-			 prepareExecution(tvalue, Tvalue, xvalue, ovalue);
+			 prepareExecution(tvalue, Tvalue, xvalue, ovalue, fvalue);
 			 
 			 ClassifierChain learner = null;
             
@@ -35,11 +35,16 @@ public class ExecuteCC extends ExecuteMulanAlgorithm {
           	   	}
           	  
           	   	learner = new ClassifierChain(new J48(), chain);
-
-          	   	learner.build(trainingSet);
     	       
-	    	    measures = prepareMeasuresClassification(trainingSet);    	       
-	    	    results = eval.evaluate(learner, testSet, measures);
+	          	measures = prepareMeasuresClassification(trainingSet);    	
+	          	
+	          	if(nFolds > 0) {
+	          		mResults = eval.crossValidate(learner, trainingSet, measures, nFolds);
+	          	}
+	          	else {
+	          		learner.build(trainingSet);  
+	          	    results = eval.evaluate(learner, testSet, measures);
+	          	}
 	    	       
 	    	    time_fin = System.currentTimeMillis();
 	    	      
@@ -52,7 +57,12 @@ public class ExecuteCC extends ExecuteMulanAlgorithm {
 	    	    	printHeader(lvalue);
 	    	    }
 	    	    
-	    	    printResults(Tvalue, lvalue, "CC");
+	    	    if(nFolds <= 0) {
+	    	    	printResults(Tvalue, lvalue, "CC");
+	    	    }
+	    	    else {
+	    	    	printResultsCV(tvalue, lvalue, "CC");
+	    	    }
 	    	    
 			 }//End for
 			 

@@ -3,10 +3,10 @@ import executeMulan.ExecuteMulanAlgorithm;
 
 public class ExecuteECC extends ExecuteMulanAlgorithm {
 	
-	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter)
+	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter, int fvalue)
 	{		
 		 try{
-			 prepareExecution(tvalue, Tvalue, xvalue, ovalue);
+			 prepareExecution(tvalue, Tvalue, xvalue, ovalue, fvalue);
 			 
 			 ECC learner = null;
             
@@ -17,10 +17,15 @@ public class ExecuteECC extends ExecuteMulanAlgorithm {
 				 
           	   	learner = new ECC(i*10);
 
-          	   	learner.build(trainingSet);
-    	       
-	    	    measures = prepareMeasuresClassification(trainingSet);    	       
-	    	    results = eval.evaluate(learner, testSet, measures);
+            	measures = prepareMeasuresClassification(trainingSet);    	
+            	
+            	if(nFolds > 0) {
+            		mResults = eval.crossValidate(learner, trainingSet, measures, nFolds);
+            	}
+            	else {
+            		learner.build(trainingSet);  
+            	    results = eval.evaluate(learner, testSet, measures);
+            	}
 	    	       
 	    	    time_fin = System.currentTimeMillis();
 	    	      
@@ -33,7 +38,12 @@ public class ExecuteECC extends ExecuteMulanAlgorithm {
 	    	    	printHeader(lvalue);
 	    	    }
 	    	    
-	    	    printResults(Tvalue, lvalue, "ECC");
+	    	    if(nFolds <= 0) {
+	    	    	printResults(Tvalue, lvalue, "ECC");
+	    	    }
+	    	    else {
+	    	    	printResultsCV(tvalue, lvalue, "ECC");
+	    	    }
 	    	    
 			 }//End for
 			 

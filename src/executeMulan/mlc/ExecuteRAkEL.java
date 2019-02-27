@@ -6,10 +6,10 @@ import weka.classifiers.trees.J48;
 
 public class ExecuteRAkEL extends ExecuteMulanAlgorithm {
 	
-	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter)
+	public void execute (String tvalue, String Tvalue, String xvalue, String ovalue, boolean lvalue, int nIter, int fvalue)
 	{		
 		 try{
-			 prepareExecution(tvalue, Tvalue, xvalue, ovalue);
+			 prepareExecution(tvalue, Tvalue, xvalue, ovalue, fvalue);
 			 
 			 RAkEL learner = null;
             
@@ -21,10 +21,15 @@ public class ExecuteRAkEL extends ExecuteMulanAlgorithm {
 				learner = new RAkEL(new LabelPowerset(new J48()));
 				learner.setSeed(i*10);
 
-          	   	learner.build(trainingSet);
-    	       
-	    	    measures = prepareMeasuresClassification(trainingSet);    	       
-	    	    results = eval.evaluate(learner, testSet, measures);
+	        	measures = prepareMeasuresClassification(trainingSet);    	
+	        	
+	        	if(nFolds > 0) {
+	        		mResults = eval.crossValidate(learner, trainingSet, measures, nFolds);
+	        	}
+	        	else {
+	        		learner.build(trainingSet);  
+	        	    results = eval.evaluate(learner, testSet, measures);
+	        	}
 	    	       
 	    	    time_fin = System.currentTimeMillis();
 	    	      
@@ -37,7 +42,12 @@ public class ExecuteRAkEL extends ExecuteMulanAlgorithm {
 	    	    	printHeader(lvalue);
 	    	    }
 	    	    
-	    	    printResults(Tvalue, lvalue, "RAkEL");
+	    	    if(nFolds <= 0) {
+	    	    	printResults(Tvalue, lvalue, "RAkEL");
+	    	    }
+	    	    else {
+	    	    	printResultsCV(tvalue, lvalue, "RAkEL");
+	    	    }
 	    	    
 			 }//End for
 			 
