@@ -1,9 +1,1 @@
-<?xml version="1.0" ?>
-<labels xmlns="http://mulan.sourceforge.net/labels">
-<label name="amazed-suprised"> </label>
-<label name="happy-pleased"> </label>
-<label name="relaxing-calm"> </label>
-<label name="quiet-still"> </label>
-<label name="sad-lonely"> </label>
-<label name="angry-aggresive"> </label>
-</labels>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><labels xmlns="http://mulan.sourceforge.net/labels"><label name="happy-pleased"/><label name="angry-aggresive"/><label name="sad-lonely"/><label name="amazed-suprised"/><label name="quiet-still"/><label name="relaxing-calm"/></labels>
