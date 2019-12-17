@@ -340,7 +340,7 @@ public class Parameters {
 		algorithms.put("CLR", "Calibrated Label Ranking.");
 		algorithms.put("LP", "Label Powerset.");
 		algorithms.put("LPBR", "LPBR.");
-		algorithms.put("PCC", "Parallel Classifier Chains.");
+		//algorithms.put("PCC", "Parallel Classifier Chains.");
 		algorithms.put("PS", "Pruned Sets.");
 		
 		//Algorithm Adaptation (AAs)
@@ -373,7 +373,7 @@ public class Parameters {
 		LinkedHashMap<String, String> algorithms = new LinkedHashMap<String, String>(20);
 		
 		algorithms.put("ERC", "Ensemble of Regressor Chains.");
-		algorithms.put("RC", "Regressor Chains.");
+		algorithms.put("RC", "Regressor Chain.");
 		algorithms.put("RLC", "Random Linear Combinations (Normalized).");
 		algorithms.put("ST", "Single Target.");
 		algorithms.put("SST", "Stacked ST.");
