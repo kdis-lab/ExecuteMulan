@@ -41,6 +41,7 @@ The full list of methods availables in this jar is provided below. It is shown t
   * ```EBR```: Ensemble of Binary Relevances
   * ```ECC```: Ensemble of Classifier Chains
   * ```ELP```: Ensemble of Label Powersets
+  * ```EMLS```: Ensemble of Multi-Label Sampling
   * ```EPS```: Ensemble of Pruned Sets
   * ```HOMER```: Hierarchy Of Multilabel classifiERs
   * ```MLS```: Multi-Label Stacking
