@@ -21,6 +21,7 @@ import parameters.mlc.emlc.CDEParameters;
 import parameters.mlc.emlc.EBRParameters;
 import parameters.mlc.emlc.ECCParameters;
 import parameters.mlc.emlc.ELPParameters;
+import parameters.mlc.emlc.EMLSParameters;
 import parameters.mlc.emlc.EPSParameters;
 import parameters.mlc.emlc.HOMERParameters;
 import parameters.mlc.emlc.MLSParameters;
@@ -222,6 +223,10 @@ public class MulanExecutor {
 			
 		case "ELP":
 			cParameters = new ELPParameters();
+			break;
+			
+		case "EMLS":
+			cParameters = new EMLSParameters();
 			break;
 			
 		case "EPS":

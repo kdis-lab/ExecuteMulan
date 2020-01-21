@@ -354,6 +354,7 @@ public class Parameters {
 		algorithms.put("EBR", "Ensemble of Binary Relevances.");
 		algorithms.put("ECC", "Ensemble of Classifier Chains.");
 		algorithms.put("ELP", "Ensemble of Label Powersets.");
+		algorithms.put("EMLS", "Ensemble of Multi-Label Sampling.");
 		algorithms.put("EPS", "Ensemble of Pruned Sets.");
 		algorithms.put("HOMER", "Hierarchy Of Multilabel classifiERs.");
 		algorithms.put("MLS", "Multi-Label Stacking.");
