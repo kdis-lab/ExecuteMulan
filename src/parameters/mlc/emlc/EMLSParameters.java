@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import algorithms.mlc.BinaryRelevance;
+import algorithms.mlc.EnsembleOfSampling;
 import executeMulan.Utils;
 import mulan.classifier.MultiLabelLearner;
-import mulan.classifier.ensemble.EnsembleOfSampling;
 import parameters.LearnerParameters;
 import parameters.Parameters;
 
@@ -48,6 +48,7 @@ public class EMLSParameters extends LearnerParameters{
 		((EnsembleOfSampling)learner).setBaseMlLearner(new BinaryRelevance(Utils.getBaseLearner(parameters.getParameter("c"))));
 		((EnsembleOfSampling)learner).setNumModels(parameters.getIntParameter("n"));
 		((EnsembleOfSampling)learner).setP(parameters.getDoubleParameter("p"));
+		((EnsembleOfSampling)learner).setSeed(seed);
 		
 		return learner;
 	}
